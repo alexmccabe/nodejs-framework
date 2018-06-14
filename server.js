@@ -1,6 +1,6 @@
 const portfinder = require('portfinder');
 
-function listen(app, defaultPort = process.env.PORT || 5000) {
+exports.listen = (app, defaultPort = process.env.PORT || 5000) => {
     portfinder.basePort = defaultPort;
 
     return portfinder
@@ -12,8 +12,4 @@ function listen(app, defaultPort = process.env.PORT || 5000) {
         .catch(err => {
             console.error(err);
         });
-}
-
-module.exports = {
-    listen
 };
