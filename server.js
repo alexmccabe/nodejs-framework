@@ -1,6 +1,6 @@
 const portfinder = require('portfinder');
 
-exports.listen = (app, defaultPort = process.env.PORT || 5000) => {
+exports.listen = (app, defaultPort = 5000) => {
     portfinder.basePort = defaultPort;
 
     return portfinder
