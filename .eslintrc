@@ -1,0 +1,36 @@
+{
+    "env": {
+        "node": true,
+        "commonjs": true
+    },
+    "extends": ["eslint:recommended"],
+
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true
+        },
+        "ecmaVersion": 2017
+    },
+    "rules": {
+        "eqeqeq": "warn",
+        "linebreak-style": ["error", "unix"],
+        "no-console": "off",
+        "quotes": ["error", "single"],
+        "semi": ["error", "always"],
+        "space-before-blocks": ["error", "always"],
+        "keyword-spacing": [
+            "error",
+            {
+                "before": true
+            }
+        ],
+        "key-spacing": [
+            "error",
+            {
+                "afterColon": true
+            }
+        ],
+        "space-in-parens": ["error", "never"]
+    }
+}
