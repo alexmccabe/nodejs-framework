@@ -2,7 +2,6 @@ require('module-alias/register');
 
 const app = require('@/app');
 const server = require('@/server');
-require('@/routes')(app);
 
 app.set('port', process.env.PORT || 5000);
 
