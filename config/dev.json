@@ -1,7 +1,6 @@
 {
   "app": {
-    "allowedOrigins": ["http://localhost:3000", "http://localhost:5000"],
-    "port": 8080
+    "allowedOrigins": ["http://localhost:3000", "http://localhost:5000"]
   },
 
   "cdn": {
