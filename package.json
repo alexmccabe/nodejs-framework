@@ -17,7 +17,7 @@
         "@": "."
     },
     "scripts": {
-        "dev": "NODE_ENV=dev nodemon index.js"
+    "dev": "NODE_ENV=dev nodemon --require dotenv/config index.js",
     },
     "engines": {
         "node": "10.3.0",
