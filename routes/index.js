@@ -2,7 +2,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const fs = require('fs');
 
-module.exports = app => {
+module.exports = (app, passport) => {
     app.use((req, res, next) => {
         // const origin = req.headers.origin;
         // const allowedOrigins = config.get('allowedOrigins');
