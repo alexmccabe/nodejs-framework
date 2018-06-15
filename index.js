@@ -5,7 +5,7 @@ const app = require('@/app');
 const server = require('@/server');
 require('@/routes')(app);
 
-app.set('port', process.env.PORT || config.get('app.port') || 5000);
+app.set('port', process.env.PORT || 5000);
 
 server
     .listen(app, app.get('port'))
