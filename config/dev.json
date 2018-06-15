@@ -4,12 +4,14 @@
     "port": 8080
   },
 
-  "google+": {
-    "oAuth": {
-      "api": {
-        "clientId":
-          "646179289949-vd0fg0hpb5np561de0tp8utstppg5q4e.apps.googleusercontent.com",
-        "clientSecret": "8rhIE4B0tURsigCaSDdY7ptY"
+  "cdn": {
+    "baseUrl": "",
+    "provider": "",
+    "config": {
+      "s3": {
+        "defaultBucket": "",
+        "endpoint": "s3.amazonaws.com",
+        "region": "eu-west-1"
       }
     }
   }
