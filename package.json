@@ -1,26 +1,27 @@
 {
-    "name": "node-framework",
-    "version": "1.0.0",
-    "description": "A Node framework",
-    "main": "index.js",
-    "author": "Alex McCabe",
-    "license": "MIT",
-    "dependencies": {
-        "config": "^1.30.0",
+  "name": "node-framework",
+  "version": "1.0.0",
+  "description": "A Node framework",
+  "main": "index.js",
+  "author": "Alex McCabe",
+  "license": "MIT",
+  "dependencies": {
+    "config": "^1.30.0",
     "dotenv": "^6.0.0",
-        "express": "^4.16.3",
-        "module-alias": "^2.1.0",
-        "nodemon": "^1.17.5",
-        "portfinder": "^1.0.13"
-    },
-    "_moduleAliases": {
-        "@": "."
-    },
-    "scripts": {
+    "express": "^4.16.3",
+    "module-alias": "^2.1.0",
+    "nodemon": "^1.17.5",
+    "portfinder": "^1.0.13"
+  },
+  "_moduleAliases": {
+    "@": "."
+  },
+  "scripts": {
     "dev": "NODE_ENV=dev nodemon --require dotenv/config index.js",
-    },
-    "engines": {
-        "node": "10.3.0",
-        "yarn": "1.7.0"
-    }
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": "10.3.0",
+    "yarn": "1.7.0"
+  }
 }
