@@ -3,8 +3,8 @@ const chalk = require('chalk');
 const express = require('express');
 const config = require('config');
 
-const app = require('@/app');
-const server = require('@/server');
+require('@/models/User');
+require('@/config/passport');
 
 const app = express();
 const db = require('@/database/default');
@@ -14,13 +14,13 @@ require('@/routes')(app);
 function boot() {
     const server = require('@/server');
 
-server.listen(app, app.get('port')).then(port => {
-    console.log('');
-    console.log(
-        chalk.bgBlue.black(' Server listening on port: '),
-        chalk.blue(port)
-    );
-});
+    server.listen(app, app.get('port')).then(port => {
+        console.log('');
+        console.log(
+            chalk.bgBlue.black(' Server listening on port: '),
+            chalk.blue(port)
+        );
+    });
 }
 
 function handleDbError(err) {
