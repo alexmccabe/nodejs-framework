@@ -19,13 +19,20 @@ passport.deserializeUser((id, done) => {
         .catch(err => done(err, null));
 });
 
+/**
+ * Google oAuth 2.0 strategory for Passport
+ *
+ * 1. This informs the strategry to trust the proxy from Heroku's Nginx server
+ *    https://stackoverflow.com/a/48478696/1694116
+ */
 passport.use(
+    'google',
     new GoogleStrategy(
         {
             clientID: process.env.GOOGLE_OAUTH_CLIENT_ID,
             clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET,
             callbackURL: '/auth/google/callback',
-            proxy: true
+            proxy: true /* [1] */
         },
         (accessToken, refreshToken, profile, done) => {
             User.findOne({ googleId: profile.id }).then(result => {
