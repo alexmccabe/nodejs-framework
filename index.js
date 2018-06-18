@@ -1,11 +1,17 @@
 require('module-alias/register');
 const chalk = require('chalk');
 const express = require('express');
-const session = require('express-session');
 const config = require('config');
 
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 const passport = require('passport');
+
+const store = new MongoDBStore({
+    uri: process.env.MONGODB_URI,
+    collection: 'sessions'
+});
 
 require('@/models/User');
 require('@/config/passport');
@@ -19,7 +25,8 @@ app.use(
         secret: process.env.COOKIE_SECRET,
         saveUninitialized: false,
         resave: false,
-        cookie: { secure: false }
+        cookie: { secure: false },
+        store
     })
 );
 app.use(passport.initialize());
