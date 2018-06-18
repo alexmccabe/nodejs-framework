@@ -1,13 +1,29 @@
 require('module-alias/register');
 const chalk = require('chalk');
 const express = require('express');
+const session = require('express-session');
 const config = require('config');
+
+const cookieParser = require('cookie-parser');
+const passport = require('passport');
 
 require('@/models/User');
 require('@/config/passport');
 
 const app = express();
 const db = require('@/database/default');
+
+app.use(cookieParser());
+app.use(
+    session({
+        secret: process.env.COOKIE_SECRET,
+        saveUninitialized: false,
+        resave: false,
+        cookie: { secure: false }
+    })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 require('@/routes')(app);
 
