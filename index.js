@@ -3,6 +3,8 @@ const chalk = require('chalk');
 const express = require('express');
 const config = require('config');
 
+console.log(process.env.NODE_ENV);
+
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
