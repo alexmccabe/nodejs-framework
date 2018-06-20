@@ -1,84 +1,36 @@
 require('module-alias/register');
-const chalk = require('chalk');
-const express = require('express');
+
+const cluster = require('cluster');
 const config = require('config');
+const path = require('path');
+const fs = require('fs');
 
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
-const MongoDBStore = require('connect-mongodb-session')(session);
-const passport = require('passport');
+if (cluster.isMaster) {
+    const { getCpuCount } = require('@/utilities');
+    const scriptPath = path.join(__dirname, config.app.paths.masterScript);
 
-const store = new MongoDBStore({
-    uri: process.env.MONGODB_URI,
-    collection: 'sessions'
-});
+    fs.access(scriptPath, fs.constants.F_OK, err => {
+        if (!err) {
+            require(scriptPath)();
+        }
+    });
 
-require('@/models/User');
-require('@/config/passport');
+    for (let i = 0; i < getCpuCount(); i += 1) {
+        cluster.fork();
+    }
+} else {
+    const scriptPath = path.join(__dirname, config.app.paths.threadScript);
 
-const app = express();
-const db = require('@/database/default');
-
-app.use(cookieParser());
-app.use(
-    session({
-        secret: process.env.COOKIE_SECRET,
-        saveUninitialized: false,
-        resave: false,
-        cookie: { secure: false },
-        store
-    })
-);
-app.use(passport.initialize());
-app.use(passport.session());
-
-require('@/routes')(app);
-
-function boot() {
-    const server = require('@/server');
-
-    server.listen(app, app.get('port')).then(port => {
-        console.log('');
-        console.log(
-            chalk.bgBlue.black(' Server listening on port: '),
-            chalk.blue(port)
-        );
+    fs.access(scriptPath, fs.constants.F_OK, err => {
+        if (!err) {
+            require(scriptPath)(cluster.worker.id);
+        }
     });
 }
 
-function handleDbError(err) {
-    if (!err.code) {
-        console.error(
-            chalk.bgRed.black(' Could not connect to db: '),
-            chalk.red(process.env.MONGODB_URI)
-        );
+cluster.on('exit', worker => {
+    if (process.env.NODE_ENV === 'production') {
+        console.log('Worker %d died, restarting...', worker.id);
+        return cluster.fork();
     }
-    console.log('');
-    console.log(chalk.bgRed.black(` ${err} `));
-
-    process.exit(0);
-}
-
-function handleDbSuccess() {
-    console.log('');
-    console.log(
-        chalk.bgCyan.black(' Successfully connected to db: '),
-        chalk.cyan(process.env.MONGODB_URI)
-    );
-    console.log('');
-
-    boot();
-}
-
-if (process.env.MONGODB_URI) {
-    db.connect(
-        process.env.MONGODB_URI,
-        config.get('mongoDB')
-    )
-        .then(() => handleDbSuccess())
-        .catch(err => handleDbError(err));
-} else {
-    boot();
-}
-
-app.set('port', process.env.PORT || 5000);
+});
