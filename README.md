@@ -109,7 +109,7 @@ Using the `@` alias is very simple. In a file where you would normally want to r
 
 const file = require('../../other/nested/file.js');
 ---
-const file = require('@/some/other/nested/file.js);
+const file = require('@/some/other/nested/file.js');
 ```
 
 _Note: This is just a visual preference. It is not required, but preferred._
