@@ -19,8 +19,6 @@ const app = express();
 const db = require('@/database/default');
 
 function start() {
-    app.use(express.static('public'));
-
     require('@/routes')(app);
 
     app.listen(process.env.PORT, function() {
