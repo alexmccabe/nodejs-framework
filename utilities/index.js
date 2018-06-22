@@ -1,4 +1,5 @@
 module.exports = {
     getAvailablePort: require('./getAvailablePort'),
-    getCpuCount: require('./getCpuCount')
+    getCpuCount: require('./getCpuCount'),
+    isAllowedOrigin: require('./isAllowedOrigin')
 };
