@@ -5,4 +5,10 @@ router.get('/', (req, res) => {
     res.send('Home');
 });
 
+router.get('/logout', (req, res) => {
+    req.logout();
+
+    return res.redirect('/');
+});
+
 module.exports = router;
