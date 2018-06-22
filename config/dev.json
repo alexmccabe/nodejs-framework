@@ -7,7 +7,12 @@
     }
   },
 
-  "bodyParser": {},
+  "bodyParser": {
+    "json": {},
+    "urlencoded": {
+      "extended": true
+    }
+  },
 
   "cdn": {
     "baseUrl": "",

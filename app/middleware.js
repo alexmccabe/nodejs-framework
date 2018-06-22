@@ -37,5 +37,7 @@ function setHeaders(req, res, next) {
 module.exports = app => {
     app.use((res, req, next) => setHeaders(res, req, next));
     app.use(express.static('public'));
-    app.use(bodyParser.json(config.get('bodyParser')));
+
+    app.use(bodyParser.urlencoded(config.get('bodyParser.urlencoded')));
+    app.use(bodyParser.json(config.get('bodyParser.json')));
 };
