@@ -108,7 +108,7 @@ Using the `@` alias is very simple. In a file where you would normally want to r
 // `some/deep/nested/file.js`
 
 const file = require('../../other/nested/file.js');
----
+// ---
 const file = require('@/some/other/nested/file.js');
 ```
 
@@ -117,9 +117,11 @@ _Note: This is just a visual preference. It is not required, but preferred._
 Aliases can be configured inside `package.json`
 
 ```json
-"_moduleAliases": {
-    "@": "."
-  },
+{
+    "_moduleAliases": {
+        "@": "."
+    }
+}
 ```
 
 Additionally, this project includes a `jsconfig.json` file which maps the `@` alias to the root path for VSCode. This allows you to keep the path completion whilst using the alias.
