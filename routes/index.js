@@ -1,12 +1,17 @@
 // const fs = require('fs');
-const setupMiddleware = require('@/modules/middleware');
+const {
+    isApiAuthorised,
+    isJsonRequest,
+    setupGlobalMiddleware: setupMiddleware
+} = require('@/modules/middleware');
 
 module.exports = app => {
     setupMiddleware(app);
 
-    app.use('/', require('./root'));
-    app.use('/api', require('./api'));
+    app.use('/', require('./default'));
+    app.use('/api', [isJsonRequest, isApiAuthorised], require('./api'));
     app.use('/auth', require('./auth'));
+    app.use('/example', require('./example'));
 
     // This was used to automatically mount routes, now deprecated
     // fs.readdirSync(__dirname).forEach(fileName => {
