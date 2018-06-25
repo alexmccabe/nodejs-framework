@@ -4,17 +4,23 @@ This is the Node framework from which we will be basing all our Node application
 
 ## Installation
 
-Clone the repo into the desired directory:
+**Clone the repo into the desired directory**
 
-`git clone https://github.com/alexmccabe/nodejs-framework.git`
+```bash
+git clone https://github.com/alexmccabe/nodejs-framework.git
+```
 
-Install dependencies:
+**Install dependencies**
 
-**Yarn:** `yarn install`
+```bash
+yarn install
+```
 
-or
+_or_
 
-**NPM:** `npm install`
+```bash
+npm install
+```
 
 ## Configuration
 
@@ -52,11 +58,13 @@ Absolutely everything (except for API keys) should go in here. For example, Mong
 
 The development environment automatically starts `nodemon` which will reload the server when it detects changes to any file. This can be configured in `nodemon.json`.
 
-`yarn dev`
+```bash
+yarn dev
+```
 
-or
-
-`npm run dev`
+```bash
+npm run dev
+```
 
 ---
 
@@ -64,11 +72,13 @@ or
 
 To test the production environment run:
 
-`yarn start`
+```bash
+yarn start
+```
 
-or
-
-`npm run start`
+```bash
+npm run start
+```
 
 _Note: This will not load the .env file, so it may break when running locally._
 
@@ -92,7 +102,9 @@ In a production environment, the app will automatically scale to fill as many th
 
 This is determined by the `WEB_CONCURRENCY` environment variable supplied by Heroku, or the number of cpus reported by the host os.
 
-`process.env.WEB_CONCURRENCY || require('os').cpus().length`
+```js
+process.env.WEB_CONCURRENCY || require('os').cpus().length;
+```
 
 In a non-production environment, the number of running threads is locked to `1`. This can be configured in `utilites/getCpuCount.js`.
 
@@ -107,8 +119,10 @@ Using the `@` alias is very simple. In a file where you would normally want to r
 ```js
 // `some/deep/nested/file.js`
 
+// Without aliasing
 const file = require('../../other/nested/file.js');
-// ---
+
+// With aliasing
 const file = require('@/some/other/nested/file.js');
 ```
 
