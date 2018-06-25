@@ -1,5 +1,5 @@
 // const fs = require('fs');
-const setupMiddleware = require('@/app/middleware');
+const setupMiddleware = require('@/modules/middleware');
 
 module.exports = app => {
     setupMiddleware(app);

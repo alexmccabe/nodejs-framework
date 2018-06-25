@@ -134,11 +134,11 @@ _Note: The `@` symbol is used throughout the project already, it is not recommen
 
 As previously mentioned, this application has concurrency built in. Two files are loaded on app boot.
 
-The first is `app/onLaunch.js`. Code in this file is run from the **Master** thread, and only run once. This is useful for creating any additional configuration, or making one of requests to external APIs.
+The first is `modules/onLaunch.js`. Code in this file is run from the **Master** thread, and only run once. This is useful for creating any additional configuration, or making one of requests to external APIs.
 
 _Note: Currently the master thread does not communicate with the child threads, so configuration created would need to be stored somewhere else (database, cache, file, etc..)._
 
-The second is `app/onThreadStart.js`. This is run every single time a new thread is run by the server, it is essentially a clone application running at the same time. The express server is booted here, and all routing is forwarded.
+The second is `modules/onThreadStart.js`. This is run every single time a new thread is run by the server, it is essentially a clone application running at the same time. The express server is booted here, and all routing is forwarded.
 
 ---
 

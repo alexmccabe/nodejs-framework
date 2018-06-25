@@ -2,8 +2,8 @@
   "app": {
     "allowedOrigins": ["http://localhost:3000", "http://localhost:5000"],
     "paths": {
-      "masterScript": "/app/onLaunch.js",
-      "threadScript": "/app/onThreadStart.js"
+      "masterScript": "/modules/onLaunch.js",
+      "threadScript": "/modules/onThreadStart.js"
     }
   },
 
