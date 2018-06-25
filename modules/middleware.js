@@ -34,10 +34,32 @@ function setHeaders(req, res, next) {
     next();
 }
 
-module.exports = app => {
+exports.setupGlobalMiddleware = app => {
     app.use((res, req, next) => setHeaders(res, req, next));
     app.use(express.static('public'));
 
     app.use(bodyParser.urlencoded(config.get('bodyParser.urlencoded')));
     app.use(bodyParser.json(config.get('bodyParser.json')));
+};
+
+exports.isJsonRequest = (req, res, next) => {
+    if (!req.is('application/json')) {
+        return res
+            .status(415)
+            .send(
+                `Expected content type of "application/json", received "${
+                    req.headers['content-type']
+                }"`
+            );
+    }
+
+    next();
+};
+
+exports.isAuthorised = (req, res, next) => {
+    next();
+};
+
+exports.isApiAuthorised = (req, res, next) => {
+    next();
 };
