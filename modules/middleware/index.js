@@ -42,18 +42,28 @@ exports.setupGlobalMiddleware = app => {
     app.use(bodyParser.json(config.get('bodyParser.json')));
 };
 
-exports.isJsonRequest = (req, res, next) => {
-    if (!req.is('application/json')) {
-        return res
-            .status(415)
-            .send(
-                `Expected content type of "application/json", received "${
-                    req.headers['content-type']
-                }"`
-            );
+exports.isXhrRequest = (req, res, next) => {
+    const isXHR = req.xhr;
+    const accept =
+        req.headers.accept && req.headers.accept.indexOf('json') > -1;
+
+    if (req.method === 'OPTIONS' || (isXHR || accept)) {
+        return next();
     }
 
-    next();
+    return res.status(415).json({
+        errors: [
+            {
+                message:
+                    'The /api endpoint can only be accessed via an XHR request.',
+                description: [
+                    'To resolve this issue send either the',
+                    '"X-Requested-With": "XMLHttpRequest" or',
+                    '"Accept: application/json" header.'
+                ].join('')
+            }
+        ]
+    });
 };
 
 exports.isAuthorised = (req, res, next) => {
