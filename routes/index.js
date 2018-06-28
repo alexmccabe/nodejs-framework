@@ -1,7 +1,8 @@
 // const fs = require('fs');
 const {
     isApiAuthorised,
-    isJsonRequest,
+    isXhrRequest,
+    rateLimit,
     setupGlobalMiddleware: setupMiddleware
 } = require('@/modules/middleware');
 
@@ -9,7 +10,11 @@ module.exports = app => {
     setupMiddleware(app);
 
     app.use('/', require('./default'));
-    app.use('/api', [isJsonRequest, isApiAuthorised], require('./api'));
+    app.use(
+        '/api',
+        [isXhrRequest, isApiAuthorised, rateLimit],
+        require('./api')
+    );
     app.use('/auth', require('./auth'));
     app.use('/example', require('./example'));
 
