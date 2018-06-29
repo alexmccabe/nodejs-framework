@@ -1,5 +1,7 @@
 module.exports = {
     getAvailablePort: require('./getAvailablePort'),
     getCpuCount: require('./getCpuCount'),
-    isAllowedOrigin: require('./isAllowedOrigin')
+    getRequestIpAddress: require('./getRequestIpAddress'),
+    isAllowedOrigin: require('./isAllowedOrigin'),
+    regex: require('./regex')
 };
