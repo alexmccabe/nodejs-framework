@@ -171,3 +171,95 @@ MongoDB can be configured in the `config/{env}.json` file, and the options are a
 This application uses the Mongoose framework on top of MongoDB. This provides a lot of benefit, and abstracts away some of the more complicated processes when using MongoDB.
 
 Refer to the [Mongoose Documentation](http://mongoosejs.com/) to get an understanding of how it works.
+
+#### Redis
+
+Redis is used to handle the rate limiter, and is required if rate limiting is turned on.
+
+The Redis URI must be made available to the application on `process.env.REDIS_URI`, which can be configured in the `.env` file.
+
+---
+
+### Rate limiting
+
+By default, rate limiting is turned off. To turn it on, set
+
+```sh
+process.env.ENABLE_API_RATE_LIMIT="TRUE"
+```
+
+_Note: `true` will also be accepted, any other value will be considered as false and rate limiting will be disabled._
+
+Rate limiting requires Redis to be installed and running on the provided URI. If rate limiting is enabled, but Redis is not installed, the server will throw an error.
+
+#### Configuration
+
+General configuration can be set in `config/{env}.json`.
+
+```js
+{
+    "ratelimit": {
+        "api": {
+            // Number of requests that can be made in the current duration.
+            // Defaults to 2500
+            "max": 2500,
+
+            // Duration until used requests reset in milliseconds
+            // Defaults to 3600000 [60*60*1000]
+            "duration": 3600000,
+
+            // How many requests can be made in 1 second of time. This limits
+            // the requester from "flooding" the server. After n requests in 1
+            // second they are refused, and their allowance will no longer
+            // continue to decrease.
+            "flood": 5
+        }
+    }
+}
+```
+
+#### Adding More Rate Limiters
+
+Adding more rate limiters to other routes is easy, however a little "roundabout".
+
+1.  You will first need to add a new key to the ratelimit object in the config (or use an existing one).
+
+```json
+"ratelimit": {
+    "newLimiter": {
+      "max": 50,
+      "duration": 60000, // 60 * 1000 (one minute)
+    }
+  }
+```
+
+2.  Then create a new function in `modules/middleware/rateLimit.js`.
+
+```js
+exports.myNewLimiter = (req, res, next) => {
+    if (process.env.ENABLE_API_RATE_LIMIT.toLowerCase() !== 'true') {
+        return next();
+    }
+
+    const limiter = new Limiter({
+        // Set a unique ID to make sure it doesn't clash with any
+        // existing rate limiters
+        id: getRequestIpAddress(req) + '-new-limiter',
+
+        db: redisClient,
+
+        // Grab the max from your config
+        max: config.get('ratelimit.newLimiter.max'),
+
+        duration: 1000
+    });
+
+    limiter.get((err, limit) => rateLimitHandler(req, res, next, err, limit));
+};
+```
+
+3.  Then add this new limiter function to your route handler as middleware.
+
+```js
+app.use('/my-route', rateLimit.myNewLimiter require('./my-route'));
+```
