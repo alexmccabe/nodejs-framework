@@ -12,7 +12,12 @@ module.exports = app => {
     app.use('/', require('./default'));
     app.use(
         '/api',
-        [isXhrRequest, isApiAuthorised, rateLimit],
+        [
+            isXhrRequest,
+            isApiAuthorised,
+            rateLimit.rateLimitAPIShort,
+            rateLimit.rateLimitAPILong
+        ],
         require('./api')
     );
     app.use('/auth', require('./auth'));
