@@ -73,3 +73,5 @@ exports.isAuthorised = (req, res, next) => {
 exports.isApiAuthorised = (req, res, next) => {
     next();
 };
+
+exports.rateLimit = require('./rateLimit');
