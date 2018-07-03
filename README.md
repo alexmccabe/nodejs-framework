@@ -1,6 +1,6 @@
 # Node Framework
 
-This is the Node framework from which we will be basing all our Node applications on going forward.
+A jumping off point for Node-based projects.
 
 ## Installation
 
