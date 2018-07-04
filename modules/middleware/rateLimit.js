@@ -3,7 +3,15 @@ const Limiter = require('ratelimiter');
 const redis = require('@/database/redis');
 const { getRequestIpAddress } = require('@/utilities');
 
-const redisClient = redis.connect();
+let redisClient;
+
+(async () => {
+    redisClient = await redis.connect().catch(err => {
+        if (err) {
+            console.error(err);
+        }
+    });
+})();
 
 function rateLimitHandler(req, res, next, err, limit) {
     if (err) {

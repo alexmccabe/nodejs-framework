@@ -2,11 +2,13 @@ const chalk = require('chalk');
 const express = require('express');
 const config = require('config');
 
+require('pretty-error').start();
+
 require('@/models/User');
 require('@/config/passport');
 
 const app = express();
-const db = require('@/database/default');
+const db = require('@/database/mongodb');
 
 function start() {
     require('@/routes')(app);
@@ -28,7 +30,6 @@ function handleDbError(err) {
     }
     console.log('');
     console.log(chalk.bgRed.black(` ${err} `));
-
     process.exit(0);
 }
 
@@ -49,8 +50,8 @@ module.exports = () => {
             process.env.MONGODB_URI,
             config.get('mongoDB')
         )
-            .then(() => handleDbSuccess())
-            .catch(err => handleDbError(err));
+            .catch(err => handleDbError(err))
+            .then(() => handleDbSuccess());
     } else {
         start();
     }
