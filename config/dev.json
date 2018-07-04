@@ -34,5 +34,21 @@
       "duration": 3600000,
       "flood": 5
     }
+  },
+
+  "security": {
+    "helmetCSP": {
+      "directives": {
+        "defaultSrc": ["'self'"]
+      },
+
+      "browserSniff": true,
+      "disableAndroid": false,
+      "loose": false,
+      "reportOnly": false,
+      "setAllHeaders": false
+    },
+
+    "referrerPolicy": ""
   }
 }
