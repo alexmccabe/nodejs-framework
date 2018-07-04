@@ -1,6 +1,16 @@
 const bodyParser = require('body-parser');
-const express = require('express');
 const config = require('config');
+const cookieParser = require('cookie-parser');
+const express = require('express');
+const passport = require('passport');
+const session = require('express-session');
+
+const MongoDBStore = require('connect-mongodb-session')(session);
+
+const store = new MongoDBStore({
+    uri: process.env.MONGODB_URI,
+    collection: 'sessions'
+});
 
 const { isAllowedOrigin } = require('@/utilities');
 
@@ -35,6 +45,18 @@ function setHeaders(req, res, next) {
 }
 
 exports.setupGlobalMiddleware = app => {
+    app.use(cookieParser());
+    app.use(
+        session({
+            secret: process.env.COOKIE_SECRET,
+            saveUninitialized: false,
+            resave: false,
+            cookie: { secure: false },
+            store
+        })
+    );
+    app.use(passport.initialize());
+    app.use(passport.session());
     app.use((res, req, next) => setHeaders(res, req, next));
     app.use(express.static('public'));
 
