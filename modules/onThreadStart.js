@@ -2,16 +2,6 @@ const chalk = require('chalk');
 const express = require('express');
 const config = require('config');
 
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
-const MongoDBStore = require('connect-mongodb-session')(session);
-const passport = require('passport');
-
-const store = new MongoDBStore({
-    uri: process.env.MONGODB_URI,
-    collection: 'sessions'
-});
-
 require('@/models/User');
 require('@/config/passport');
 
@@ -54,19 +44,6 @@ function handleDbSuccess() {
 }
 
 module.exports = () => {
-    app.use(cookieParser());
-    app.use(
-        session({
-            secret: process.env.COOKIE_SECRET,
-            saveUninitialized: false,
-            resave: false,
-            cookie: { secure: false },
-            store
-        })
-    );
-    app.use(passport.initialize());
-    app.use(passport.session());
-
     if (process.env.MONGODB_URI) {
         db.connect(
             process.env.MONGODB_URI,

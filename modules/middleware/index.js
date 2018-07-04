@@ -1,6 +1,19 @@
 const bodyParser = require('body-parser');
-const express = require('express');
 const config = require('config');
+const cookieParser = require('cookie-parser');
+const csp = require('helmet-csp');
+const express = require('express');
+const helmet = require('helmet');
+const passport = require('passport');
+const referrerPolicy = require('referrer-policy');
+const session = require('express-session');
+
+const MongoDBStore = require('connect-mongodb-session')(session);
+
+const store = new MongoDBStore({
+    uri: process.env.MONGODB_URI,
+    collection: 'sessions'
+});
 
 const { isAllowedOrigin } = require('@/utilities');
 
@@ -34,7 +47,57 @@ function setHeaders(req, res, next) {
     next();
 }
 
+function setSecurityHeaders(app) {
+    if (
+        !process.env.DISABLE_SECURITY_HTTP_HEADERS ||
+        process.env.DISABLE_SECURITY_HTTP_HEADERS.toLowerCase() !== 'true'
+    ) {
+        app.use(helmet());
+    }
+
+    if (
+        !process.env.DISABLE_SECURITY_HTTP_CSP ||
+        process.env.DISABLE_SECURITY_HTTP_CSP.toLowerCase() !== 'true'
+    ) {
+        app.use(
+            csp(
+                config.has('security.helmetCSP')
+                    ? config.get('security.helmetCSP')
+                    : { directives: { defaultSrc: ['\'self\''] } }
+            )
+        );
+    }
+
+    if (
+        !process.env.DISABLE_HTTP_REFERRER ||
+        process.env.DISABLE_HTTP_REFERRER.toLowerCase() !== 'true'
+    ) {
+        app.use(
+            referrerPolicy(
+                config.has('security.referrerPolicy')
+                    ? config.get('security.referrerPolicy')
+                    : null
+            )
+        );
+    }
+}
+
 exports.setupGlobalMiddleware = app => {
+    app.use(cookieParser());
+    app.use(
+        session({
+            secret: process.env.COOKIE_SECRET,
+            saveUninitialized: false,
+            resave: false,
+            cookie: { secure: false },
+            store
+        })
+    );
+    app.use(passport.initialize());
+    app.use(passport.session());
+
+    setSecurityHeaders(app);
+
     app.use((res, req, next) => setHeaders(res, req, next));
     app.use(express.static('public'));
 
