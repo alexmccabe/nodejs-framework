@@ -21,7 +21,9 @@
     "portfinder": "^1.0.13",
     "pretty-error": "^2.1.1",
     "ratelimiter": "^3.1.0",
-    "redis": "^2.8.0"
+    "redis": "^2.8.0",
+    "winston": "^3.0.0",
+    "winston-mongodb": "^4.0.0-rc1"
   },
   "devDependencies": {
     "dotenv": "^6.0.0",
