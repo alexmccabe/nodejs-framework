@@ -1,0 +1,1 @@
+exports.DatabaseConnectionError = require('./DatabaseConnectionError');
