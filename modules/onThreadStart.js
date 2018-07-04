@@ -30,7 +30,6 @@ function handleDbError(err) {
     }
     console.log('');
     console.log(chalk.bgRed.black(` ${err} `));
-
     process.exit(0);
 }
 
@@ -51,8 +50,8 @@ module.exports = () => {
             process.env.MONGODB_URI,
             config.get('mongoDB')
         )
-            .then(() => handleDbSuccess())
-            .catch(err => handleDbError(err));
+            .catch(err => handleDbError(err))
+            .then(() => handleDbSuccess());
     } else {
         start();
     }
