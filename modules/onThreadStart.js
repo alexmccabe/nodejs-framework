@@ -6,7 +6,7 @@ require('@/models/User');
 require('@/config/passport');
 
 const app = express();
-const db = require('@/database/default');
+const db = require('@/database/mongodb');
 
 function start() {
     require('@/routes')(app);
