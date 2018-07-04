@@ -2,6 +2,8 @@ const chalk = require('chalk');
 const express = require('express');
 const config = require('config');
 
+require('pretty-error').start();
+
 require('@/models/User');
 require('@/config/passport');
 
