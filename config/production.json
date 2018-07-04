@@ -26,5 +26,13 @@
     }
   },
 
-  "mongoDB": {}
+  "mongoDB": {},
+
+  "ratelimit": {
+    "api": {
+      "max": 2500,
+      "duration": 3600000,
+      "flood": 5
+    }
+  },
 }
