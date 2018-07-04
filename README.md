@@ -263,3 +263,43 @@ exports.myNewLimiter = (req, res, next) => {
 ```js
 app.use('/my-route', rateLimit.myNewLimiter require('./my-route'));
 ```
+
+## Security
+
+Following the recommendations outlined in [this article](https://blog.risingstack.com/node-js-security-checklist/), this Node Framework has many options automatically enabled to deter ne'er-do-wells. None of it is bulletproof of course, but it does make things slightly harder.
+
+### Security Headers
+
+Security headers are added in `modules/onThreadStart.js`. They can be disabled and configured individually.
+
+#### General Security Headers
+
+The framework uses `helmetjs` (https://github.com/helmetjs) to automatically add headers to the site on every request.
+
+```sh
+DISABLE_SECURITY_HTTP_HEADERS="TRUE"
+```
+
+_Note: This is not recommended, unless you have a good reason._
+
+---
+
+#### Content Security Policy
+
+Content Security Policy can be configured from `config/{env}.js`. This is handled by `helmetjs/csp` (https://github.com/helmetjs/csp). All options defined in the config will be passed down to `helmet-csp`.
+
+Information on available CSP settings can be found on [Scott Helme's website](https://scotthelme.co.uk/content-security-policy-an-introduction/).
+
+```sh
+DISABLE_SECURITY_HTTP_CSP="TRUE"
+```
+
+#### Referrer Policy
+
+Content Security Policy can be configured from `config/{env}.js`. This is handled by `helmetjs/referrer-policy` (https://github.com/helmetjs/referrer-policy).
+
+Information on available referrer settings can be found on [Scott Helme's website](https://scotthelme.co.uk/a-new-security-header-referrer-policy/).
+
+```sh
+DISABLE_HTTP_REFERRER="TRUE"
+```
