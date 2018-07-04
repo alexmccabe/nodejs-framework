@@ -1,21 +1,39 @@
 const Redis = require('redis');
+const { DatabaseConnectionError } = require('@/modules/errors');
 
 module.exports = {
     connect() {
-        if (process.env.REDIS_URI) {
+        return new Promise((resolve, reject) => {
+            if (!process.env.REDIS_URI) {
+                return reject(
+                    new DatabaseConnectionError(
+                        [
+                            'Trying to connect to a Redis store with',
+                            'no URI provided.',
+                            'It could be that the `REDIS_URI` environment',
+                            'variable is missing or empty. Please check your',
+                            'configuration.'
+                        ].join(' ')
+                    )
+                );
+            }
+
             const client = Redis.createClient({
                 url: process.env.REDIS_URI
             });
 
-            client.on('error', function(err) {
-                console.log('Error ' + err);
+            client.on('error', err => {
+                return reject(new DatabaseConnectionError(err));
             });
 
-            return client;
-        } else {
-            throw new Error(
-                'Trying to connect to a Redis store with no URI provided'
-            );
-        }
+            client.on('connect', () => {
+                console.log('Connected to Redis server');
+                return resolve(client);
+            });
+
+            client.on('end', () => {
+                console.log('Disconnected from Redis server');
+            });
+        });
     }
 };
