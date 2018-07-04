@@ -3,7 +3,8 @@
     "allowedOrigins": ["http://localhost:3000", "http://localhost:5000"],
     "paths": {
       "masterScript": "/modules/onLaunch.js",
-      "threadScript": "/modules/onThreadStart.js"
+      "threadScript": "/modules/onThreadStart.js",
+      "logDir": "/logs"
     }
   },
 
