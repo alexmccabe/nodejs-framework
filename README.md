@@ -303,3 +303,19 @@ Information on available referrer settings can be found on [Scott Helme's websit
 ```sh
 DISABLE_HTTP_REFERRER="TRUE"
 ```
+
+### CSRF (Cross-Site Request Forgery) Protection
+
+CSRF Protection is enabled by default, on all routes except for `/api`. The CSRF token is available on the response body when requesting data or a URL, this should be stored locally for the duration of the process. It will be required to be sent either as a header (for AJAX requests), or as a value in the form data.
+
+CSRF is handled by the `expressjs/csurf` (https://github.com/expressjs/csurf) library. The documentation details advanced usage.
+
+CSRF can be disabled in your `.env` config by setting:
+
+```sh
+DISABLE_CSRF="TRUE"
+```
+
+#### Usage
+
+// NEED TO WRITE //

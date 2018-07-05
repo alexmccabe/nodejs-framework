@@ -1,4 +1,6 @@
 // const fs = require('fs');
+const csrf = require('csurf');
+
 const {
     isApiAuthorised,
     isXhrRequest,
@@ -20,6 +22,18 @@ module.exports = app => {
         ],
         require('./api')
     );
+
+    if (
+        !process.env.DISABLE_CSRF ||
+        process.env.DISABLE_CSRF.toLowerCase() !== 'true'
+    ) {
+        app.use(csrf({ cookie: true }));
+        app.use(function(req, res, next) {
+            res.cookie('csrf-token', req.csrfToken());
+            next();
+        });
+    }
+
     app.use('/auth', require('./auth'));
     app.use('/example', require('./example'));
 

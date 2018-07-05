@@ -8,9 +8,9 @@ const path = require('path');
  * This runs on master before any of the threads have been forked.
  */
 module.exports = async () => {
-    const logDir = path.join(__dirname, '..', config.app.paths.logDir);
-
     if (process.env.NODE_ENV !== 'production') {
+        const logDir = path.join(__dirname, '..', config.app.paths.logDir);
+
         fs.access(logDir, fs.constants.F_OK, err => {
             if (err) {
                 fs.mkdir(logDir, err => {
