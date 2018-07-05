@@ -1,5 +1,5 @@
 const Redis = require('redis');
-const { DatabaseConnectionError } = require('@/modules/errors');
+const { DatabaseConnectionError } = require('@/app/modules/errors');
 
 module.exports = {
     connect() {

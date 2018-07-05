@@ -4,14 +4,14 @@ const config = require('config');
 
 require('pretty-error').start();
 
-require('@/models/User');
+require('@/app/models/User');
 require('@/config/passport');
 
 const app = express();
-const db = require('@/database/mongodb');
+const db = require('@/app/database/mongodb');
 
 function start() {
-    require('@/routes')(app);
+    require('@/app/routes')(app);
 
     app.listen(process.env.PORT, function() {
         console.log(

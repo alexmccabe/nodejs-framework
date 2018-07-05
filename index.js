@@ -6,7 +6,7 @@ const path = require('path');
 const fs = require('fs');
 
 if (cluster.isMaster) {
-    const { getCpuCount } = require('@/utilities');
+    const { getCpuCount } = require('@/app/utilities');
     const scriptPath = path.join(__dirname, config.app.paths.masterScript);
 
     fs.access(scriptPath, fs.constants.F_OK, err => {

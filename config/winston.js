@@ -2,7 +2,7 @@ const config = require('config');
 const winston = require('winston');
 const { createLogger, format, transports } = winston;
 const { combine, timestamp, printf } = format;
-const CustomConsoleTransport = require('@/modules/winstonTransports/consoleTransport');
+const CustomConsoleTransport = require('@/app/modules/winstonTransports/consoleTransport');
 
 const MongoDbTransport = require('winston-mongodb').MongoDB;
 

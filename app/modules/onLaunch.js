@@ -1,4 +1,4 @@
-// const { getAvailablePort } = require('@/utilities');
+// const { getAvailablePort } = require('@/app/utilities');
 const config = require('config');
 const fs = require('fs');
 const path = require('path');

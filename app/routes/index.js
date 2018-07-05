@@ -4,7 +4,7 @@ const {
     isXhrRequest,
     rateLimit,
     setupGlobalMiddleware: setupMiddleware
-} = require('@/modules/middleware');
+} = require('@/app/modules/middleware');
 
 module.exports = app => {
     setupMiddleware(app);

@@ -1,4 +1,4 @@
-const { ExampleModel } = require('@/models');
+const { ExampleModel } = require('@/app/models');
 
 exports.findByParam = () => {};
 exports.getAll = () => {

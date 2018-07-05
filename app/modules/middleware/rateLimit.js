@@ -1,7 +1,7 @@
 const config = require('config');
 const Limiter = require('ratelimiter');
-const redis = require('@/database/redis');
-const { getRequestIpAddress } = require('@/utilities');
+const redis = require('@/app/database/redis');
+const { getRequestIpAddress } = require('@/app/utilities');
 
 let redisClient;
 

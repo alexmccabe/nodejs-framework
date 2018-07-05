@@ -15,7 +15,7 @@ const store = new MongoDBStore({
     collection: 'sessions'
 });
 
-const { isAllowedOrigin } = require('@/utilities');
+const { isAllowedOrigin } = require('@/app/utilities');
 
 /**
  * Set the required headers for the application

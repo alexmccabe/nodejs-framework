@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { ExampleController } = require('@/controllers');
+const { ExampleController } = require('@/app/controllers');
 
 router
     .route('/')
