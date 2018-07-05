@@ -3,7 +3,7 @@ const csp = require('helmet-csp');
 const helmet = require('helmet');
 const referrerPolicy = require('referrer-policy');
 
-const { isAllowedOrigin } = require('@/utilities');
+const { isAllowedOrigin } = require('@/app/utilities');
 
 module.exports = {
     /**
