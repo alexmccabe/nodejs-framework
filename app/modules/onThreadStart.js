@@ -7,8 +7,25 @@ require('@/config/passport');
 
 const app = express();
 const db = require('@/app/database/mongodb');
+const { appPath, basePath } = require('@/app/utilities').paths;
 
 function start() {
+    const templateEngine = process.env.TEMPLATE_ENGINE;
+    app.set('basePath', basePath());
+    app.set('appPath', appPath());
+    app.set('views', basePath() + config.app.paths.templateDir);
+
+    if (
+        templateEngine &&
+        templateEngine.length &&
+        templateEngine.toLowerCase() !== 'html'
+    ) {
+        app.set('view engine', templateEngine);
+    } else {
+        app.engine('html', require('ejs').renderFile);
+        app.set('view engine', 'html');
+    }
+
     require('@/app/routes')(app);
 
     app.listen(process.env.PORT, function() {
