@@ -4,7 +4,9 @@
     "paths": {
       "masterScript": "/app/modules/onLaunch.js",
       "threadScript": "/app/modules/onThreadStart.js",
-      "logDir": "/logs"
+      "logDir": "/logs",
+      "staticAssetDir": "/public",
+      "templateDir": "/templates"
     }
   },
 
