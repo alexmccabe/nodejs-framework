@@ -3,5 +3,6 @@ module.exports = {
     getCpuCount: require('./getCpuCount'),
     getRequestIpAddress: require('./getRequestIpAddress'),
     isAllowedOrigin: require('./isAllowedOrigin'),
+    paths: require('./paths'),
     regex: require('./regex')
 };
