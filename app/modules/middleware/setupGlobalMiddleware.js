@@ -31,7 +31,7 @@ module.exports = app => {
     setSecurityHeaders(app);
 
     app.use((res, req, next) => setHeaders(res, req, next));
-    app.use(express.static('public'));
+    app.use(express.static(config.app.paths.staticAssetDir || 'public'));
 
     app.use(bodyParser.urlencoded(config.get('bodyParser.urlencoded')));
     app.use(bodyParser.json(config.get('bodyParser.json')));
