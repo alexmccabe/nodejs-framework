@@ -30,7 +30,6 @@ module.exports = {
     },
 
     errorHandler(error, req, res, next) {
-        console.log('no here');
         if (error) {
             console.error(pe.render(error));
 
