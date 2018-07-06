@@ -8,6 +8,7 @@ require('@/config/passport');
 const app = express();
 const db = require('@/app/database/mongodb');
 const { appPath, basePath } = require('@/app/utilities').paths;
+const { errorHandler } = require('./errorHandlers');
 
 function start() {
     const templateEngine = process.env.TEMPLATE_ENGINE;
@@ -27,6 +28,8 @@ function start() {
     }
 
     require('@/app/routes')(app);
+
+    app.use(errorHandler);
 
     app.listen(process.env.PORT, function() {
         console.log(
