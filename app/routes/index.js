@@ -8,6 +8,8 @@ const {
     setupGlobalMiddleware: setupMiddleware
 } = require('@/app/modules/middleware');
 
+const { errorHandler, notFound } = require('@/app/modules/errorHandlers');
+
 module.exports = app => {
     setupMiddleware(app);
 
@@ -36,6 +38,9 @@ module.exports = app => {
 
     app.use('/auth', require('./auth'));
     app.use('/example', require('./example'));
+
+    app.use(notFound);
+    app.use(errorHandler);
 
     // This was used to automatically mount routes, now deprecated
     // fs.readdirSync(__dirname).forEach(fileName => {
