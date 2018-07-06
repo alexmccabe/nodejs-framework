@@ -25,7 +25,8 @@
     "ratelimiter": "^3.1.0",
     "redis": "^2.8.0",
     "winston": "^3.0.0",
-    "winston-mongodb": "^4.0.0-rc1"
+    "winston-mongodb": "^4.0.0-rc1",
+    "youch": "^2.0.8"
   },
   "devDependencies": {
     "dotenv": "^6.0.0",
