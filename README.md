@@ -408,3 +408,21 @@ const token = document
     .querySelector('meta[name="csrf-token"]')
     .getAttribute('content');
 ```
+
+## Scripts
+
+### Generate a Cookie Key (or any other key I suppose)
+
+```sh
+yarn gen-key
+```
+
+```sh
+npm run gen-key
+```
+
+This will generate a key of 20 random characters with. If you want to specify the length, you can pass `--length 30` to the call;
+
+```sh
+yarn gen-key --length 30
+```
