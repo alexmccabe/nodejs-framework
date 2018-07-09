@@ -16,8 +16,6 @@ git clone https://github.com/alexmccabe/nodejs-framework.git
 yarn install
 ```
 
-_or_
-
 ```bash
 npm install
 ```
