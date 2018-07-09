@@ -15,6 +15,7 @@ function start() {
     app.set('basePath', basePath());
     app.set('appPath', appPath());
     app.set('views', basePath() + config.app.paths.templateDir);
+    app.set('trust proxy', 1);
 
     if (
         templateEngine &&
