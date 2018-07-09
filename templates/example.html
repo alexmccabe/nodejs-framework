@@ -9,7 +9,44 @@
 </head>
 
 <body>
-    gdnlkhjfgd
+    <form action="/example" method="POST">
+        <input type="text" name="firstName">
+        <input type="text" name="lasttName">
+        <input type="number" name="age">
+
+        <button type="submit">Submit</button>
+        <input type="hidden" name="_csrf" id="_csrf">
+    </form>
 </body>
+
+<script>
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    window._csrf = getCookie('X-CSRF-Token');
+
+    const $forms = document.querySelectorAll('form');
+
+    $forms.forEach($form => {
+        const csrfField = $form.querySelector('#_csrf');
+
+        if (csrfField) {
+            csrfField.value = window._csrf;
+        }
+    })
+</script>
 
 </html>
