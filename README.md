@@ -316,4 +316,95 @@ DISABLE_CSRF="TRUE"
 
 #### Usage
 
-// NEED TO WRITE //
+The CSRF token is available as a header on all requests as `X-CSRF-Token`. There may also be a `_csrf` cookie, and this is used internally
+
+##### Template Engine
+
+If using a template engine, it is possible to pass the CSRF token as data to the template in the render function.
+
+```js
+// routes/form.js
+
+app.get('/form', csrfProtection, function(req, res) {
+    // pass the csrfToken to the view
+    res.render('send', { csrfToken: req.csrfToken() });
+});
+```
+
+You would use this method when using any pre-compiled code in the public directory.
+
+```hbs
+<!-- form.html -->
+
+<form action="/process" method="POST">
+  <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+  Favorite color: <input type="text" name="favoriteColor">
+  <button type="submit">Submit</button>
+</form>
+```
+
+##### Single Page App
+
+If you aren't using a template engine, and instead serving a single-page app (from `/public`), using React, it is recommended that you write the CSRF Token as a meta header before sending the file.
+
+This can be achieved using the [`cheeriojs` library](https://github.com/cheeriojs/cheerio), which adopts the jQuery API to modify the HTML before sending it to the browser.
+
+**Install**
+
+```sh
+yarn add cheerio
+```
+
+```
+npm install cheerio
+```
+
+**Server**
+
+```js
+const fs = require('fs');
+const cheerio = require('cheerio');
+
+app.on('/', (req, res, next) => {
+    fs.readFile('path/to/file.html', (err, html) => {
+        if (err) {
+            return next(err);
+        }
+
+        const $ = cheerio.load(html);
+
+        $('head').append(
+            `<meta name="csrf-token" content="${req.csrfToken()}">`
+        );
+
+        return res.send($.html());
+    });
+});
+```
+
+**Client**
+
+```js
+const token = document
+    .querySelector('meta[name="csrf-token"]')
+    .getAttribute('content');
+```
+
+##### AJAX
+
+If using AJAX from within a template engine, a little bit of both methods described above is required.
+
+First you add a `meta` to the header
+
+```hbs
+<meta name="csrf-token" content="{{csrfToken}}">
+```
+
+Then you grab that meta tag and send it with your request
+
+```js
+const token = document
+    .querySelector('meta[name="csrf-token"]')
+    .getAttribute('content');
+```
