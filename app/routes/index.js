@@ -1,7 +1,7 @@
 // const fs = require('fs');
-const csrf = require('csurf');
 
 const {
+    CSRF: addCSRF,
     isApiAuthorised,
     isXhrRequest,
     rateLimit,
@@ -13,7 +13,6 @@ const { errorHandler, notFound } = require('@/app/modules/errorHandlers');
 module.exports = app => {
     setupMiddleware(app);
 
-    app.use('/', require('./default'));
     app.use(
         '/api',
         [
@@ -25,16 +24,8 @@ module.exports = app => {
         require('./api')
     );
 
-    if (
-        !process.env.DISABLE_CSRF ||
-        process.env.DISABLE_CSRF.toLowerCase() !== 'true'
-    ) {
-        app.use(csrf({ cookie: true }));
-        app.use(function(req, res, next) {
-            res.cookie('csrf-token', req.csrfToken());
-            next();
-        });
-    }
+    addCSRF(app);
+    app.use('/', require('./default'));
 
     app.use('/auth', require('./auth'));
     app.use('/example', require('./example'));
