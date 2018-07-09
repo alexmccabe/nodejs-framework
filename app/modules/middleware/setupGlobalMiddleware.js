@@ -21,7 +21,7 @@ module.exports = app => {
             secret: process.env.COOKIE_SECRET,
             saveUninitialized: false,
             resave: false,
-            cookie: { secure: false },
+            cookie: { secure: true, sameSite: true },
             store
         })
     );
