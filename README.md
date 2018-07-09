@@ -4,7 +4,7 @@ A jumping off point for Node-based projects.
 
 ## Installation
 
-**Clone the repo into the desired directory**
+**Clone the repository into the desired directory**
 
 ```bash
 git clone https://github.com/alexmccabe/nodejs-framework.git
@@ -24,7 +24,7 @@ npm install
 
 ### Environment
 
-The root of the application contains a `.env.example` file. This file should be renamed to `.env`. Environment files should not be commited to source control (they are ignored in `.gitignore`). Commiting an environment file would allow anyone with access to it to see sensitive credentials.
+The root of the application contains a `.env.example` file. This file should be renamed to `.env`. Environment files should not be committed to source control (they are ignored in `.gitignore`). Committing an environment file would allow anyone with access to it to see sensitive credentials.
 
 Once renamed, fill in all the required details (some are provided as empty), or add any new ones. These will become available in the `process.env` object inside your Node application.
 
@@ -98,13 +98,13 @@ https://docs.aws.amazon.com/lambda/latest/dg/env_variables.html
 
 In a production environment, the app will automatically scale to fill as many threads as possible.
 
-This is determined by the `WEB_CONCURRENCY` environment variable supplied by Heroku, or the number of cpus reported by the host os.
+This is determined by the `WEB_CONCURRENCY` environment variable supplied by Heroku, or the number of CPUs reported by the host os.
 
 ```js
 process.env.WEB_CONCURRENCY || require('os').cpus().length;
 ```
 
-In a non-production environment, the number of running threads is locked to `1`. This can be configured in `utilites/getCpuCount.js`.
+In a non-production environment, the number of running threads is locked to `1`. This can be configured in `utilities/getCpuCount.js`.
 
 ## Developing
 
