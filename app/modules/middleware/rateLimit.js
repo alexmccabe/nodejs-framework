@@ -47,8 +47,8 @@ exports.rateLimitAPILong = (req, res, next) => {
     const longLimit = new Limiter({
         id: getRequestIpAddress(req) + '-long',
         db: redisClient,
-        max: config.get('ratelimit.api.max'),
-        duration: config.get('ratelimit.api.duration')
+        max: config.get('rateLimit.api.max'),
+        duration: config.get('rateLimit.api.duration')
     });
 
     longLimit.get((err, limit) => rateLimitHandler(req, res, next, err, limit));
@@ -62,7 +62,7 @@ exports.rateLimitAPIShort = (req, res, next) => {
     const longLimit = new Limiter({
         id: getRequestIpAddress(req) + '-short',
         db: redisClient,
-        max: config.get('ratelimit.api.flood'),
+        max: config.get('rateLimit.api.flood'),
         duration: 1000
     });
 
