@@ -4,6 +4,7 @@ const config = require('config');
 
 require('@/app/models/User');
 require('@/config/passport');
+require('@/config/aws')();
 
 const app = express();
 const db = require('@/app/database/mongodb');
