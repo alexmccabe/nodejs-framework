@@ -110,7 +110,7 @@ In a non-production environment, the number of running threads is locked to `1`.
 
 ### Aliases
 
-Aliases allow for shortcuts whilst developing. By default, this project comes with the root directory aliased to the `@` symbol. This alleviates the multiple `../../../` issue that can be found.
+Aliases allow for short-cuts whilst developing. By default, this project comes with the root directory aliased to the `@` symbol. This alleviates the multiple `../../../` issue that can be found.
 
 Using the `@` alias is very simple. In a file where you would normally want to require a file multiple directories back, just prefix the path with the symbol and work down.
 
@@ -339,7 +339,7 @@ You would use this method when using any pre-compiled code in the public directo
 <form action="/process" method="POST">
   <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
-  Favorite color: <input type="text" name="favoriteColor">
+  Favourite color: <input type="text" name="favouriteColor">
   <button type="submit">Submit</button>
 </form>
 ```
@@ -408,6 +408,25 @@ const token = document
     .querySelector('meta[name="csrf-token"]')
     .getAttribute('content');
 ```
+
+---
+
+### XSS
+
+To prevent user provided data causing a vulnerability, you should filter out any HTML that is unwanted. To do so, use the library `xss` (https://github.com/leizongmin/js-xss). This library is already installed and ready to use, and is very simple to do so.
+
+**Example (from their documentation)**
+
+```js
+const xss = require('xss');
+const html = xss('<script>alert("xss");</script>');
+
+console.log(html);
+```
+
+This library has many options to customise what is allowed and what is not.
+
+_Note: Although this library is installed, it is not run automagically. You *must* call it manually. Coupled with database model validation, you can help prevent any unwanted and insecure data being stored._
 
 ## Scripts
 
