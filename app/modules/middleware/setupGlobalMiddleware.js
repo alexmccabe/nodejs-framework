@@ -33,6 +33,6 @@ module.exports = app => {
     app.use((res, req, next) => setHeaders(res, req, next));
     app.use(express.static(config.app.paths.staticAssetDir || 'public'));
 
-    app.use(bodyParser.urlencoded(config.get('bodyParser.urlencoded')));
-    app.use(bodyParser.json(config.get('bodyParser.json')));
+    app.use(bodyParser.urlencoded(config.bodyParser.urlencoded));
+    app.use(bodyParser.json(config.bodyParser.json));
 };

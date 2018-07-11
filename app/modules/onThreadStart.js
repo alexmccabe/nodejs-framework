@@ -67,7 +67,7 @@ module.exports = () => {
     if (process.env.MONGODB_URI) {
         db.connect(
             process.env.MONGODB_URI,
-            config.get('mongoDB')
+            config.mongoDB
         )
             .catch(err => handleDbError(err))
             .then(() => handleDbSuccess());

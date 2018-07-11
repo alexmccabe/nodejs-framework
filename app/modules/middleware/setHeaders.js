@@ -58,7 +58,7 @@ module.exports = {
             app.use(
                 csp(
                     config.has('security.helmetCSP')
-                        ? config.get('security.helmetCSP')
+                        ? config.security.helmetCSP
                         : { directives: { defaultSrc: ['\'self\''] } }
                 )
             );
@@ -71,7 +71,7 @@ module.exports = {
             app.use(
                 referrerPolicy(
                     config.has('security.referrerPolicy')
-                        ? config.get('security.referrerPolicy')
+                        ? config.security.referrerPolicy
                         : null
                 )
             );

@@ -9,7 +9,7 @@ const config = require('config');
  * @param {String} origin Origin of request
  */
 module.exports = origin => {
-    const allowedOrigins = config.get('app.allowedOrigins');
+    const allowedOrigins = config.app.allowedOrigins;
 
     if (allowedOrigins.length) {
         if (
