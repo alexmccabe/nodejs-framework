@@ -44,7 +44,7 @@ const port = process.env.PORT;
 
 ---
 
-### Aditional Config
+### Additional Config
 
 Additionally, each environment should have a `config/{env}.json` file. This is used for general configuration, that is not secure keys or Node requirement configuration.
 
@@ -82,7 +82,7 @@ _Note: This will not load the .env file, so it may break when running locally._
 
 ## Deploying
 
-As previously mentioned, the `.env` file should not be commited to version control, and as such should also not be deployed to a live server. As this is the case, all environment variables should be made available to the application from the hosting environment itself.
+As previously mentioned, the `.env` file should not be committed to version control, and as such should also not be deployed to a live server. As this is the case, all environment variables should be made available to the application from the hosting environment itself.
 
 _Note: Heroku throws an error when there is both a `yarn.lock` and a `package-lock.json` in the root of the directory. So pick one and stick to it for the development process._
 
@@ -196,7 +196,7 @@ General configuration can be set in `config/{env}.json`.
 
 ```js
 {
-    "ratelimit": {
+    "rateLimit": {
         "api": {
             // Number of requests that can be made in the current duration.
             // Defaults to 2500
@@ -220,10 +220,10 @@ General configuration can be set in `config/{env}.json`.
 
 Adding more rate limiters to other routes is easy, however a little "roundabout".
 
-1.  You will first need to add a new key to the ratelimit object in the config (or use an existing one).
+1.  You will first need to add a new key to the rateLimit object in the config (or use an existing one).
 
 ```json
-"ratelimit": {
+"rateLimit": {
     "newLimiter": {
       "max": 50,
       "duration": 60000, // 60 * 1000 (one minute)
@@ -247,7 +247,7 @@ exports.myNewLimiter = (req, res, next) => {
         db: redisClient,
 
         // Grab the max from your config
-        max: config.get('ratelimit.newLimiter.max'),
+        max: config.get('rateLimit.newLimiter.max'),
 
         duration: 1000
     });
@@ -296,7 +296,7 @@ DISABLE_SECURITY_HTTP_CSP="TRUE"
 
 Content Security Policy can be configured from `config/{env}.js`. This is handled by `helmetjs/referrer-policy` (https://github.com/helmetjs/referrer-policy).
 
-Information on available referrer settings can be found on [Scott Helme's website](https://scotthelme.co.uk/a-new-security-header-referrer-policy/).
+Information on available referrer settings can be found on [Scott Helmet's website](https://scotthelme.co.uk/a-new-security-header-referrer-policy/).
 
 ```sh
 DISABLE_HTTP_REFERRER="TRUE"
