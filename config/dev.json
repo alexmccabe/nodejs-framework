@@ -21,10 +21,14 @@
     "baseUrl": "",
     "provider": "",
     "config": {
-      "s3": {
-        "defaultBucket": "",
+      "aws": {
         "endpoint": "s3.amazonaws.com",
-        "region": "eu-west-1"
+        "region": "eu-west-1",
+        "usePromise": true
+      },
+
+      "s3": {
+        "Bucket": ""
       }
     }
   },
