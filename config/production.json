@@ -1,19 +1,58 @@
 {
   "app": {
-    "allowedOrigins": ["http://localhost:3000", "http://localhost:5000"]
+    "allowedOrigins": [],
+    "paths": {
+      "masterScript": "/app/modules/onLaunch.js",
+      "threadScript": "/app/modules/onThreadStart.js"
+    }
+  },
+
+  "bodyParser": {
+    "json": {},
+    "urlencoded": {
+      "extended": true
+    }
   },
 
   "cdn": {
     "baseUrl": "",
     "provider": "",
     "config": {
-      "s3": {
-        "defaultBucket": "",
+      "aws": {
         "endpoint": "s3.amazonaws.com",
-        "region": "eu-west-1"
+        "region": "eu-west-1",
+        "usePromise": true
+      },
+
+      "s3": {
+        "Bucket": ""
       }
     }
   },
 
-  "mongoDB": {}
+  "mongoDB": {},
+
+  "ratelimit": {
+    "api": {
+      "max": 2500,
+      "duration": 3600000,
+      "flood": 5
+    }
+  },
+
+  "security": {
+    "helmetCSP": {
+      "directives": {
+        "defaultSrc": ["'self'"]
+      },
+
+      "browserSniff": true,
+      "disableAndroid": false,
+      "loose": false,
+      "reportOnly": false,
+      "setAllHeaders": false
+    },
+
+    "referrerPolicy": ""
+  }
 }
