@@ -64,13 +64,6 @@ function handleDbError(err) {
 }
 
 function handleDbSuccess() {
-    console.log('');
-    console.log(
-        chalk.bgCyan.black(' Successfully connected to db: '),
-        chalk.cyan(process.env.MONGODB_URI)
-    );
-    console.log('');
-
     start();
 }
 
