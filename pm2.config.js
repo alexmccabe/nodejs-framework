@@ -1,25 +1,42 @@
+const ignoreWatchDirs = [
+    '.git',
+    'logs',
+    'tmp',
+    'node_modules',
+    'pm2.config.js',
+    'ecosystem.config.js'
+];
+
 module.exports = {
-    /**
-     * Application configuration section
-     * http://pm2.keymetrics.io/docs/usage/application-declaration/
-     */
     apps: [
-        // First application
+        /**
+         * Production config
+         */
         {
-            name: 'node-framework',
-            script: 'index.js',
+            exec_mode: 'cluster_mode',
+            ignore_watch: ignoreWatchDirs,
             instance_var: 'INSTANCE_ID',
+            instances: 'max',
+            name: 'framework-production',
+            node_args: [],
+            script: 'app.js',
             env: {
-                exec_mode: 'cluster_mode',
-                instances: 'max',
-                node_args: '--require dotenv/config',
-                ignore_watch: ['node_modules', 'pm2.config.js'],
-                watch: true,
-                NODE_ENV: 'dev'
-            },
-            env_production: {
-                watch: false,
                 NODE_ENV: 'production'
+            }
+        },
+
+        /**
+         * Development config
+         */
+        {
+            args: ['--color'],
+            instance_var: 'INSTANCE_ID',
+            name: 'framework-development',
+            node_args: '--require dotenv/config',
+            script: 'app.js',
+            watch: true,
+            env: {
+                NODE_ENV: 'dev'
             }
         }
     ]
