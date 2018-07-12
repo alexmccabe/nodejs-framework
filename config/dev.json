@@ -34,7 +34,9 @@
     }
   },
 
-  "mongoDB": {},
+  "mongoose": {
+    "useNewUrlParser": true
+  },
 
   "rateLimit": {
     "api": {
