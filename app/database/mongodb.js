@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const config = require('config');
 const mongoose = require('mongoose');
 
 mongoose.connection.on('disconnected', function() {
@@ -22,7 +23,10 @@ module.exports = {
     connect(url) {
         return new Promise((resolve, reject) => {
             mongoose
-                .connect(url)
+                .connect(
+                    url,
+                    config.mongoDB || {}
+                )
                 .then(() => resolve())
                 .catch(err => reject(err));
         });
