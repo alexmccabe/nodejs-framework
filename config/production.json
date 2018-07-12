@@ -38,7 +38,7 @@
     "useNewUrlParser": true
   },
 
-  "ratelimit": {
+  "rateLimit": {
     "api": {
       "max": 2500,
       "duration": 3600000,
@@ -49,7 +49,10 @@
   "security": {
     "helmetCSP": {
       "directives": {
-        "defaultSrc": ["'self'"]
+        "defaultSrc": ["'self'"],
+        "fontSrc": ["fonts.googleapis.com", "fonts.gstatic.com"],
+        "scriptSrc": ["'self'", "'unsafe-inline'"],
+        "styleSrc": ["fonts.googleapis.com", "'unsafe-inline'"]
       },
 
       "browserSniff": true,
