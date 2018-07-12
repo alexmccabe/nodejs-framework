@@ -6,7 +6,7 @@ const { getRequestIpAddress } = require('@/app/utilities');
 let redisClient;
 
 (async () => {
-    redisClient = await redis.connect().catch(err => {
+    redisClient = await redis.connect(process.env.REDIS_URI).catch(err => {
         if (err) {
             console.error(err);
         }
