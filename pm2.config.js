@@ -31,6 +31,9 @@ module.exports = {
         {
             args: ['--color'],
             instance_var: 'INSTANCE_ID',
+            instances: 1,
+            max_restarts: 1,
+            min_uptime: 2000,
             name: 'framework-development',
             node_args: '--require dotenv/config',
             script: 'app.js',

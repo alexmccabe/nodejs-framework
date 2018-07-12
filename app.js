@@ -1,36 +1,31 @@
 // const cluster = require('cluster');
+const chalk = require('chalk');
 const config = require('config');
 const path = require('path');
+const PrettyError = require('pretty-error');
 const fs = require('fs');
+const pe = new PrettyError();
 
 require('module-alias/register');
 
-// if (cluster.isMaster) {
-//     const { getCpuCount } = require('@/app/utilities');
-//     const scriptPath = path.join(__dirname, config.app.paths.masterScript);
+if (!config.has('app.paths.bootScript')) {
+    console.log(' ');
+    console.log(
+        chalk.bgRed.black(
+            ' No launch script path specified, application will now exit. '
+        )
+    );
+    console.log(' ');
 
-//     fs.access(scriptPath, fs.constants.F_OK, err => {
-//         if (!err) {
-//             require(scriptPath)();
-//         }
-//     });
+    process.exit(0);
+}
 
-//     for (let i = 0; i < getCpuCount(); i += 1) {
-//         cluster.fork();
-//     }
-// } else {
-const scriptPath = path.join(__dirname, config.app.paths.threadScript);
+const scriptPath = path.join(__dirname, config.app.paths.bootScript);
 
 fs.access(scriptPath, fs.constants.F_OK, err => {
-    if (!err) {
-        require(scriptPath)(process.env.INSTANCEID);
+    if (err) {
+        return console.log(pe.render(new Error(err)));
     }
-});
-// }
 
-// cluster.on('exit', worker => {
-//     if (process.env.NODE_ENV === 'production') {
-//         console.log('Worker %d died, restarting...', worker.id);
-//         return cluster.fork();
-//     }
-// });
+    require(scriptPath)(process.env.INSTANCE_ID);
+});

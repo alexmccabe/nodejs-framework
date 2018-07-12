@@ -1,3 +1,6 @@
+const config = require('config');
+const path = require('path');
+
 const paths = {
     basePath() {
         return process.mainModule.paths[0]
@@ -6,7 +9,22 @@ const paths = {
     },
 
     appPath() {
-        return paths.basePath() + '/app';
+        return path.join(paths.basePath(), '/app');
+    },
+
+    staticAssetPath() {
+        return path.join(
+            paths.basePath(),
+            config.app.paths.staticAssetDir || 'public'
+        );
+    },
+
+    logPath() {
+        return path.join(paths.basePath(), config.app.paths.logDir || 'logs');
+    },
+
+    tmpPath() {
+        return path.join(paths.basePath(), config.app.paths.tmpDir || 'tmp');
     }
 };
 

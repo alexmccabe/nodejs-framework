@@ -1,6 +1,7 @@
 const chalk = require('chalk');
 const express = require('express');
 const config = require('config');
+const path = require('path');
 
 require('@/app/models/User');
 require('@/config/passport');
@@ -8,14 +9,23 @@ require('@/config/aws')();
 
 const app = express();
 const db = require('@/app/database/mongodb');
-const { appPath, basePath } = require('@/app/utilities').paths;
 const { errorHandler } = require('./errorHandlers');
+const {
+    appPath,
+    basePath,
+    logPath,
+    staticAssetPath,
+    tmpPath
+} = require('@/app/utilities').paths;
 
 function start() {
     const templateEngine = process.env.TEMPLATE_ENGINE;
     app.set('basePath', basePath());
     app.set('appPath', appPath());
-    app.set('views', basePath() + config.app.paths.templateDir);
+    app.set('views', path.join(basePath(), config.app.paths.templateDir));
+    app.set('logPath', logPath());
+    app.set('staticAssetPath', staticAssetPath());
+    app.set('tmpPath', tmpPath());
     app.set('trust proxy', 1);
 
     if (
