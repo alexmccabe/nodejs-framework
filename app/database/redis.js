@@ -35,7 +35,13 @@ module.exports = {
                 console.log(
                     chalk.bgCyan.black(' Successfully connected to Redis ')
                 );
-                console.log(chalk.cyan('Host: ' + uriParts.host));
+                console.log(' ');
+                console.log(
+                    '    ' +
+                        (uriParts.pathname ? '    ' : '') +
+                        chalk.bold.cyan('Host:'),
+                    chalk.cyan(uriParts.host)
+                );
                 uriParts.pathname
                     ? console.log(
                           chalk.cyan(

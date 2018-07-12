@@ -1,6 +1,7 @@
 const chalk = require('chalk');
 const express = require('express');
 const config = require('config');
+const ip = require('ip');
 const path = require('path');
 
 require('@/app/models/User');
@@ -44,10 +45,23 @@ function start() {
     app.use(errorHandler);
 
     app.listen(process.env.PORT, function() {
+        console.log(' ');
         console.log(
-            chalk.bgBlue.black(' Server listening on port: '),
-            chalk.blue(process.env.PORT)
+            chalk.bgBlue.black(
+                ' Successfully started server, you can now start making requests '
+            )
         );
+        console.log(' ');
+        console.log(
+            chalk.bold.blue('            Locally:'),
+            chalk.blue('http://localhost:') + chalk.bold.blue(process.env.PORT)
+        );
+        console.log(
+            chalk.bold.blue('    On Your Network:'),
+            chalk.blue(`http://${ip.address()}:`) +
+                chalk.bold.blue(process.env.PORT)
+        );
+        console.log(' ');
     });
 }
 

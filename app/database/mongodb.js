@@ -37,12 +37,19 @@ module.exports = {
                             ' Successfully connected to MongoDB '
                         )
                     );
-                    console.log(chalk.cyan('Host: ' + uriParts.host));
+                    console.log(' ');
                     console.log(
-                        chalk.cyan(
-                            'Database: ' + uriParts.pathname.replace('/', '')
-                        )
+                        '    ' +
+                            (uriParts.pathname ? '    ' : '') +
+                            chalk.bold.cyan('Host:'),
+                        chalk.cyan(uriParts.host)
                     );
+                    uriParts.pathname
+                        ? console.log(
+                              chalk.bold.cyan('    Database:'),
+                              chalk.cyan(uriParts.pathname.replace('/', ''))
+                          )
+                        : null;
                     console.log(' ');
 
                     resolve();
