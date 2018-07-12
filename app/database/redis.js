@@ -1,8 +1,10 @@
+const chalk = require('chalk');
 const Redis = require('redis');
+const url = require('url');
 const { DatabaseConnectionError } = require('@/app/modules/errors');
 
 module.exports = {
-    connect() {
+    connect(redisUrl) {
         return new Promise((resolve, reject) => {
             if (!process.env.REDIS_URI) {
                 return reject(
@@ -19,7 +21,7 @@ module.exports = {
             }
 
             const client = Redis.createClient({
-                url: process.env.REDIS_URI
+                url: redisUrl
             });
 
             client.on('error', err => {
@@ -27,7 +29,22 @@ module.exports = {
             });
 
             client.on('connect', () => {
-                console.log('Connected to Redis server');
+                const uriParts = url.parse(redisUrl);
+
+                console.log(' ');
+                console.log(
+                    chalk.bgCyan.black(' Successfully connected to Redis ')
+                );
+                console.log(chalk.cyan('Host: ' + uriParts.host));
+                uriParts.pathname
+                    ? console.log(
+                          chalk.cyan(
+                              'Database: ' + uriParts.pathname.replace('/', '')
+                          )
+                      )
+                    : null;
+                console.log(' ');
+
                 return resolve(client);
             });
 

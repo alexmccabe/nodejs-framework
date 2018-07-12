@@ -1,6 +1,7 @@
 const chalk = require('chalk');
 const config = require('config');
 const mongoose = require('mongoose');
+const url = require('url');
 
 mongoose.connection.on('disconnected', function() {
     console.log(
@@ -20,14 +21,32 @@ process.on('SIGINT', function() {
 });
 
 module.exports = {
-    connect(url) {
+    connect(mongoURI) {
         return new Promise((resolve, reject) => {
             mongoose
                 .connect(
-                    url,
+                    mongoURI,
                     config.mongoDB || {}
                 )
-                .then(() => resolve())
+                .then(() => {
+                    const uriParts = url.parse(mongoURI);
+
+                    console.log(' ');
+                    console.log(
+                        chalk.bgCyan.black(
+                            ' Successfully connected to MongoDB '
+                        )
+                    );
+                    console.log(chalk.cyan('Host: ' + uriParts.host));
+                    console.log(
+                        chalk.cyan(
+                            'Database: ' + uriParts.pathname.replace('/', '')
+                        )
+                    );
+                    console.log(' ');
+
+                    resolve();
+                })
                 .catch(err => reject(err));
         });
     },
