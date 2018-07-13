@@ -17,6 +17,8 @@ module.exports = {
             ignore_watch: ignoreWatchDirs,
             instance_var: 'INSTANCE_ID',
             instances: 'max',
+            max_restarts: 1,
+            min_uptime: 2000,
             name: 'framework-production',
             node_args: [],
             script: 'app.js',
