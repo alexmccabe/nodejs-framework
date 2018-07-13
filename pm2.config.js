@@ -37,7 +37,7 @@ module.exports = {
             max_restarts: 1,
             min_uptime: 2000,
             name: 'framework-development',
-            node_args: '--require dotenv/config',
+            node_args: ['--inspect'],
             script: 'app.js',
             watch: true,
             env: {
