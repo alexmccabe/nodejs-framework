@@ -6,10 +6,10 @@ const PrettyError = require('pretty-error');
 const fs = require('fs');
 const pe = new PrettyError();
 
-require('module-alias/register');
+require('module-alias')();
 
 if (process.env.NODE_ENV !== 'production') {
-    require('dotenv/config');
+    require('dotenv').config();
 }
 
 if (!config.has('app.paths.bootScript')) {
