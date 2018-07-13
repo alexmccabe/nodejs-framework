@@ -8,6 +8,10 @@ const pe = new PrettyError();
 
 require('module-alias/register');
 
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv/config');
+}
+
 if (!config.has('app.paths.bootScript')) {
     console.log(' ');
     console.log(
