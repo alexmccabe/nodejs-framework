@@ -3,19 +3,41 @@ const config = require('config');
 const mongoose = require('mongoose');
 const url = require('url');
 
-mongoose.connection.on('disconnected', function() {
+function logSuccess(uri) {
+    const uriParts = url.parse(uri);
+
+    console.log(' ');
+    console.log(chalk.bgCyan.black(' Successfully connected to MongoDB '));
+    console.log(' ');
     console.log(
-        chalk.bgRed.black(' Mongoose default connection disconnected ')
+        '    ' + (uriParts.pathname ? '    ' : '') + chalk.bold.cyan('Host:'),
+        chalk.cyan(uriParts.host)
     );
+
+    uriParts.pathname
+        ? console.log(
+              chalk.bold.cyan('    Database:'),
+              chalk.cyan(uriParts.pathname.replace('/', ''))
+          )
+        : null;
+    console.log(' ');
+}
+
+mongoose.connection.on('disconnected', function() {
+    console.log(' ');
+    console.log(chalk.bgRed.black(' Disconnected from MongoDB '));
+    console.log(' ');
 });
 
 process.on('SIGINT', function() {
     mongoose.connection.close(function() {
         console.log(
             chalk.yellow(
-                'Mongoose default connection disconnected through app termination'
+                'MongoDB connection disconnected through app termination'
             )
         );
+        console.log(' ');
+
         process.exit(0);
     });
 });
@@ -29,28 +51,7 @@ module.exports = {
                     config.mongoDB || {}
                 )
                 .then(() => {
-                    const uriParts = url.parse(mongoURI);
-
-                    console.log(' ');
-                    console.log(
-                        chalk.bgCyan.black(
-                            ' Successfully connected to MongoDB '
-                        )
-                    );
-                    console.log(' ');
-                    console.log(
-                        '    ' +
-                            (uriParts.pathname ? '    ' : '') +
-                            chalk.bold.cyan('Host:'),
-                        chalk.cyan(uriParts.host)
-                    );
-                    uriParts.pathname
-                        ? console.log(
-                              chalk.bold.cyan('    Database:'),
-                              chalk.cyan(uriParts.pathname.replace('/', ''))
-                          )
-                        : null;
-                    console.log(' ');
+                    logSuccess(mongoURI);
 
                     resolve();
                 })

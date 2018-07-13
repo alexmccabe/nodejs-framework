@@ -55,7 +55,9 @@ module.exports = {
             });
 
             client.on('end', () => {
-                console.log('Disconnected from Redis server');
+                console.log(' ');
+                console.log(chalk.bgRed.black(' Disconnected from Redis '));
+                console.log(' ');
             });
         });
     }

@@ -19,6 +19,32 @@ const {
     tmpPath
 } = require('@/app/utilities').paths;
 
+function logSuccess() {
+    console.log(' ');
+    console.log(
+        chalk.bgBlue.black(
+            ' Successfully started server, you can now start making requests '
+        )
+    );
+    console.log(' ');
+
+    if (
+        process.env.NODE_ENV === 'dev' ||
+        process.env.NODE_ENV === 'development'
+    ) {
+        console.log(
+            chalk.bold.blue('            Locally:'),
+            chalk.blue('http://localhost:') + chalk.bold.blue(process.env.PORT)
+        );
+        console.log(
+            chalk.bold.blue('    On Your Network:'),
+            chalk.blue(`http://${ip.address()}:`) +
+                chalk.bold.blue(process.env.PORT)
+        );
+        console.log(' ');
+    }
+}
+
 function start() {
     const templateEngine = process.env.TEMPLATE_ENGINE;
     app.set('basePath', basePath());
@@ -45,35 +71,22 @@ function start() {
     app.use(errorHandler);
 
     app.listen(process.env.PORT, function() {
-        console.log(' ');
-        console.log(
-            chalk.bgBlue.black(
-                ' Successfully started server, you can now start making requests '
-            )
-        );
-        console.log(' ');
-        console.log(
-            chalk.bold.blue('            Locally:'),
-            chalk.blue('http://localhost:') + chalk.bold.blue(process.env.PORT)
-        );
-        console.log(
-            chalk.bold.blue('    On Your Network:'),
-            chalk.blue(`http://${ip.address()}:`) +
-                chalk.bold.blue(process.env.PORT)
-        );
-        console.log(' ');
+        logSuccess();
     });
 }
 
 function handleDbError(err) {
+    console.log(' ');
+
     if (!err.code) {
         console.error(
             chalk.bgRed.black(' Could not connect to db: '),
             chalk.red(process.env.MONGODB_URI)
         );
+        console.log(' ');
     }
-    console.log('');
     console.log(chalk.bgRed.black(` ${err} `));
+    console.log(' ');
     process.exit(0);
 }
 
