@@ -98,15 +98,11 @@ https://docs.aws.amazon.com/lambda/latest/dg/env_variables.html
 
 In a production environment, the app will automatically scale to fill as many threads as possible.
 
-This is determined by the `WEB_CONCURRENCY` environment variable supplied by Heroku, or the number of CPUs reported by the host os.
-
-```js
-process.env.WEB_CONCURRENCY || require('os').cpus().length;
-```
-
-In a non-production environment, the number of running threads is locked to `1`. This can be configured in `utilities/getCpuCount.js`.
+This is all handled by PM2. To configure how many threads are running concurrently, you can update the `instances: 'max'` config inside `./pm2.config.js`.
 
 ## Developing
+
+Running the development server will automatically watch for changes and reload. This is handled by PM2 and can be turned off by setting `watch: false` inside `./pm2.config.js`.
 
 ### Aliases
 
