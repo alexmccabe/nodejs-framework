@@ -2,12 +2,11 @@
   "app": {
     "allowedOrigins": [],
     "paths": {
-      "masterScript": "/app/modules/onLaunch.js",
-      "threadScript": "/app/modules/onThreadStart.js",
-      "logDir": "../logs",
-      "staticAssetDir": "../public",
-      "templateDir": "../templates",
-      "tmpDir": "../tmp"
+      "bootScript": "./app/modules/boot.js",
+      "logDir": "./logs",
+      "staticAssetDir": "./public",
+      "templateDir": "./templates",
+      "tmpDir": "./tmp"
     }
   },
 
