@@ -6,37 +6,37 @@
   "author": "Alex McCabe",
   "license": "Apache",
   "dependencies": {
-    "aws-sdk": "^2.272.1",
+    "aws-sdk": "^2.336.0",
     "chalk": "^2.4.1",
     "cheerio": "^1.0.0-rc.2",
-    "config": "^1.30.0",
+    "config": "^2.0.1",
     "connect-mongodb-session": "^2.0.3",
     "cookie-parser": "^1.4.3",
     "csurf": "^1.9.0",
     "ejs": "^2.6.1",
-    "express": "^4.16.3",
+    "express": "^4.16.4",
     "express-session": "^1.15.6",
-    "helmet": "^3.12.1",
+    "helmet": "^3.14.0",
     "ip": "^1.1.5",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.11",
     "module-alias": "^2.1.0",
-    "mongoose": "^5.2.1",
+    "mongoose": "^5.3.4",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^1.0.0",
-    "pm2": "^3.0.0",
-    "portfinder": "^1.0.13",
+    "pm2": "^3.2.2",
+    "portfinder": "^1.0.17",
     "pretty-error": "^2.1.1",
     "ratelimiter": "^3.1.0",
     "redis": "^2.8.0",
-    "winston": "^3.0.0",
+    "winston": "^3.1.0",
     "winston-mongodb": "^4.0.0-rc1",
     "xss": "^1.0.3",
-    "youch": "^2.0.8"
+    "youch": "^2.0.10"
   },
   "devDependencies": {
-    "dotenv": "^6.0.0",
-    "nodemon": "^1.17.5",
-    "yargs": "^12.0.1"
+    "dotenv": "^6.1.0",
+    "nodemon": "^1.18.4",
+    "yargs": "^12.0.2"
   },
   "_moduleAliases": {
     "@": "."
@@ -49,6 +49,6 @@
   },
   "engines": {
     "node": "10.3.0",
-    "yarn": "1.7.0"
+    "yarn": "1.9.2"
   }
 }
